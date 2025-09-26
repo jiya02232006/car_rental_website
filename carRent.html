@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get-Set-Accelerate</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    }
+    header, footer {
+      background: linear-gradient(90deg, #ff6f61, #ff9966);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ffe0b2;
+    }
+    .container {
+      padding: 20px;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=60') center/cover no-repeat;
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+    .hero h2 {
+      font-size: 3em;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin-top: 15px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+    }
+    .card {
+      background: #ffffff;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .car-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .btn {
+      background: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 1em;
+    }
+    .btn:hover {
+      background: #388e3c;
+    }
+    h2 {
+      color: #ff6f61;
+      text-align: center;
+      margin-top: 0;
+    }
+    .orders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .payment-form {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .payment-form h3 {
+      margin-top: 0;
+      color: #4caf50;
+      text-align: center;
+    }
+    .payment-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Get-Set-Accelerate</h1>
+    <nav>
+      <a href="#home" data-link>Home</a>
+      <a href="#catalog" data-link>Catalog</a>
+      <a href="#orders" data-link>My Orders</a>
+      <a href="#payment" data-link>Payment</a>
+    </nav>
+  </header>
+  <div class="container" id="app"></div>
+  <footer>
+    © Get-Set-Accelerate — All rights reserved.
+  </footer>
+  <script>
+    const app = document.getElementById('app');
+    const cars = [
+      { id: 1, name: 'Sedan Classic', price: 800000, img: 'https://images.unsplash.com/photo-1549921296-3a5276370b36?auto=format&fit=crop&w=800&q=60' },
+      { id: 2, name: 'Sports Coupe', price: 1500000, img: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=800&q=60' },
+      { id: 3, name: 'Electric Future', price: 2000000, img: 'https://images.unsplash.com/photo-1617130128641-c4d6e97e3557?auto=format&fit=crop&w=800&q=60' }
+    ];
+
+    let orders = [];
+
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function renderHome() {
+      app.innerHTML = `
+        <div class="hero">
+          <h2>Drive Your Dream Today</h2>
+          <p>Discover luxury, performance, and innovation in our exclusive car collection.</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <h2>Welcome to Get-Set-Accelerate</h2>
+          <p>Order your dream car and accelerate into the future!</p>
+        </div>`;
+    }
+
+    function renderCatalog() {
+      app.innerHTML = '<h2>Car Catalog</h2>' + cars.map(car => `
+        <div class="card">
+          <img src="${car.img}" alt="${car.name}" class="car-img" />
+          <h3>${car.name}</h3>
+          <p>Price: ₹${numberWithCommas(car.price)}</p>
+          <button class="btn" onclick="orderCar(${car.id})">Order Now</button>
+        </div>
+      `).join('');
+    }
+
+    function orderCar(id) {
+      const car = cars.find(c => c.id === id);
+      orders.push(car);
+      alert(`${car.name} has been added to your orders.`);
+      location.hash = '#orders';
+    }
+
+    function renderOrders() {
+      if (orders.length === 0) {
+        app.innerHTML = '<div class="card"><p style="text-align:center">No orders yet.</p></div>';
+      } else {
+        app.innerHTML = '<h2>My Orders</h2><div class="orders-container">' + orders.map(car => `
+          <div class="card">
+            <img src="${car.img}" alt="${car.name}" class="car-img" />
+            <h3>${car.name}</h3>
+            <p>Price: ₹${numberWithCommas(car.price)}</p>
+          </div>
+        `).join('') + '</div>';
+      }
+    }
+
+    function renderPayment() {
+      let total = orders.reduce((sum, car) => sum + car.price, 0);
+      app.innerHTML = `
+        <h2>Payment</h2>
+        <div class="payment-form">
+          <h3>Complete Your Purchase</h3>
+          <p>Total Amount: <strong>₹${numberWithCommas(total)}</strong></p>
+          <input type="text" placeholder="Cardholder Name" />
+          <input type="text" placeholder="Card Number" />
+          <input type="text" placeholder="Expiry Date (MM/YY)" />
+          <input type="text" placeholder="CVV" />
+          <button class="btn" style="width:100%" onclick="alert('Payment successful!')">Pay Now</button>
+        </div>`;
+    }
+
+    function render() {
+      const hash = location.hash.replace('#','');
+      switch(hash) {
+        case 'catalog': renderCatalog(); break;
+        case 'orders': renderOrders(); break;
+        case 'payment': renderPayment(); break;
+        default: renderHome(); break;
+      }
+    }
+
+    window.addEventListener('hashchange', render);
+    window.addEventListener('load', ()=>{
+      if(location.hash==='' || location.hash==='#home') location.hash='#home';
+      render();
+    });
+  </script>
+</body>
+</html>
